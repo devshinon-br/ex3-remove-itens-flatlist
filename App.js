@@ -42,12 +42,15 @@ const App = () => {
 
   const onRemoveFromCart = (productId) => {
     setItensCarrinho((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== productId);
+      const updatedItems = prevItems.filter((item) => {
+        if (item.id === productId) {
+          setTotalItens((prevTotal) => prevTotal - item.qty);
+          return false; 
+        }
+        return true; 
+      });
       return updatedItems;
     });
-
-    // Decrementar o total de itens quando um item é removido
-    setTotalItens((prevTotal) => prevTotal - 1);
   };
 
   const getTotalPrice = () => {
